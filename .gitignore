@@ -30,3 +30,4 @@ env/
 *.out
 *.pid
 *dumper.sh
+*gitkey.txt
