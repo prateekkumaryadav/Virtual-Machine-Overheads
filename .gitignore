@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Archives
+*.zip
+
+# Microsoft Word files
+*.doc
+*.docx
+
+# Optional benchmark/runtime artifacts
+*.out
+*.pid
+*dump_results.sh
