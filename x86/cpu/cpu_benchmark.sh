@@ -8,7 +8,7 @@ DURATION=30
 RUNS=5
 # Use 1 thread for single, match core count for multi
 THREADS_SINGLE=1
-THREADS_MULTI=$(nproc)
+THREADS_MULTI=3
 
 mkdir -p "$OUTDIR"
 
