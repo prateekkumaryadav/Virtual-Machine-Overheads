@@ -1,10 +1,7 @@
-#!/bin/bash
-# save as: diskio_benchmark.sh
 # Usage: bash diskio_benchmark.sh baremetal   OR   bash diskio_benchmark.sh vm
 #
 # Requires: brew install fio
 # WARNING: creates and deletes a ~4GB test file in $TESTDIR
-# Estimated runtime: ~25-30 minutes total
 
 LABEL=${1:-"unknown"}
 OUTDIR="./results_diskio_${LABEL}"
