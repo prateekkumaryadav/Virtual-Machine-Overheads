@@ -1,0 +1,51 @@
+prateek@Prateek-Kumar disk % bash diskio_benchmark.sh baremetal
+
+===== Disk I/O Benchmarks — baremetal =====
+Test file : /Users/prateek/fio_test/fio_testfile (2g)
+Output dir: ./results_diskio_baremetal
+Runtime   : 60s per job
+
+=== [1/7] Sequential write (1M blocks, direct I/O) ===
+  [cache flush] Running purge (may prompt for sudo)...
+Password:
+  Done. (f=1): [W(1)][100.0%][w=2567MiB/s][w=2567 IOPS][eta 00m:00s]
+
+=== [2/7] Sequential read (1M blocks, direct I/O) ===
+  [cache flush] Running purge (may prompt for sudo)...
+  Done. (f=1): [R(1)][100.0%][r=2842MiB/s][r=2841 IOPS][eta 00m:00s]
+
+=== [3/7] Random write IOPS (4K blocks, direct I/O) ===
+  [cache flush] Running purge (may prompt for sudo)...
+  Done. (f=1): [w(1)][100.0%][w=58.2MiB/s][w=14.9k IOPS][eta 00m:00s]
+
+=== [4/7] Random read IOPS (4K blocks, direct I/O) ===
+  [cache flush] Running purge (may prompt for sudo)...
+  Done. (f=1): [r(1)][100.0%][r=168MiB/s][r=43.1k IOPS][eta 00m:00s]
+
+=== [5/7] Mixed 70R/30W random (4K blocks, direct I/O) ===
+  [cache flush] Running purge (may prompt for sudo)...
+  Done. (f=1): [m(1)][100.0%][r=76.9MiB/s,w=33.0MiB/s][r=19.7k,w=8448 IOPS][eta 00m:00s]
+
+=== [6/7] fsync latency (4K, iodepth=1, sync) ===
+  [cache flush] Running purge (may prompt for sudo)...
+  Done. (f=1): [W(1)][100.0%][w=912KiB/s][w=228 IOPS][eta 00m:00s]
+
+=== [7/7] Block size scaling (seq read+write, 4K→1M) ===
+  Block size: 4k
+  [cache flush] Running purge (may prompt for sudo)...
+  [cache flush] Running purge (may prompt for sudo)...[eta 00m:00s]
+  Block size: 64k(1)][100.0%][w=276MiB/s][w=70.7k IOPS][eta 00m:00s]
+  [cache flush] Running purge (may prompt for sudo)...
+  [cache flush] Running purge (may prompt for sudo)...S][eta 00m:00s]
+  Block size: 512k1)][100.0%][w=612MiB/s][w=9792 IOPS][eta 00m:00s] 
+  [cache flush] Running purge (may prompt for sudo)...
+  [cache flush] Running purge (may prompt for sudo)...][eta 00m:00s]
+  Block size: 1mW(1)][100.0%][w=2627MiB/s][w=5253 IOPS][eta 00m:00s]
+  [cache flush] Running purge (may prompt for sudo)...
+  [cache flush] Running purge (may prompt for sudo)...][eta 00m:00s]
+  Done. (f=1): [W(1)][100.0%][w=2577MiB/s][w=2577 IOPS][eta 00m:00s]
+
+Cleaning up test file...
+
+===== All disk I/O benchmarks complete =====
+Results saved in: ./results_diskio_baremetal

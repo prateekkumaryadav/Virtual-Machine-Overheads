@@ -1,0 +1,25 @@
+here's why the network benchmark design is fundamentally different from CPU and disk:
+
+For CPU and disk, bare metal and VM were independent runs of the same workload. For network, the most meaningful measurement is the host↔VM path itself, because that's where virtualization overhead actually lives. Running iperf3 to an external server from both machines would mostly measure your Wi-Fi/router, not the virtualization layer.
+
+The three reference points we'll establish are loopback on bare metal (theoretical ceiling — no NIC involved, pure kernel networking), host↔VM (what we're measuring — virtio-net overhead), and bare metal to external (real-world physical NIC reference). The gap between loopback and host↔VM is the virtualization overhead; the gap between host↔VM and external is the additional cost of leaving the machine entirely.
+
+NAT mode is important to document in your methodology. With NAT, the traffic path is:
+
+iperf3 (VM) → virtio-net → UTM NAT engine (userspace) → host TCP stack → iperf3 (host)
+
+The UTM NAT engine sits in userspace on the host, meaning every packet crosses the kernel↔userspace boundary twice — once leaving the VM, once entering the host process. This is measurably worse than bridged mode (which uses a kernel virtual switch) and that difference is itself a finding worth stating in your thesis.
+
+--
+Perfect — everything is confirmed. Here's the exact picture:
+Host NAT gateway : 192.168.64.1   (iperf3 server runs here)
+VM guest IP      : 192.168.64.5   (iperf3 client runs here)
+Loopback         : 127.0.0.1      (baseline, host only)
+One important correction to the script design — with NAT mode, the host must be the iperf3 server and the VM must be the client. The reverse (VM as server, host as client) won't work reliably because the VM is behind NAT and the host can't initiate connections into it. The --reverse flag handles the reverse direction test without needing the VM to be the server.
+Also note from your ping results — already interesting data for your thesis:
+
+VM → Host RTT: 0.313 ms avg (virtio-net + NAT userspace traversal)
+VM loopback RTT: 0.085 ms avg (guest kernel only, no virtual NIC)
+
+The 3.7× latency difference between guest loopback and crossing the NAT boundary is already visible even before iperf3.
+

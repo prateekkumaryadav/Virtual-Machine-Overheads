@@ -1,0 +1,7 @@
+Three things worth noting for your methodology section
+
+Why posixaio and not libaio: libaio is Linux-only. On macOS, posixaio uses the POSIX async I/O API which maps to the kernel's async path — it's the correct equivalent and what production macOS storage benchmarks use.
+
+Why --direct=1 for most tests: Without O_DIRECT, both bare metal and VM results get absorbed into the page cache and you end up measuring DRAM speed, not storage. direct=1 bypasses the cache and forces every I/O to travel the full path to the physical device. The one exception is the fsync test (benchmark 6) where direct=0 + fsync=1 is the correct model — it mirrors how real applications (SQLite, PostgreSQL) actually write.
+
+Why sudo purge between tests: macOS aggressively caches recently read data. Without purging, run 2 of sequential read would hit the cache and report 10× inflated numbers. purge forces the kernel to release all cached pages, guaranteeing cold-cache conditions for every run.

@@ -1,0 +1,14 @@
+# Install Homebrew if not present
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install tools
+brew install sysbench stress-ng python3
+
+# Python deps for plotting
+pip3 install matplotlib pandas numpy scipy
+
+'''
+bash collect_sysinfo.sh | tee sysinfo_baremetal.txt
+
+bash cpu_benchmark/cpu_benchmark.sh baremetal 
+'''

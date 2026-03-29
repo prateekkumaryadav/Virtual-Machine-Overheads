@@ -1,0 +1,16 @@
+Key findings
+
+TCP throughput — 48–54% overhead (67.8 Gbps send, 60.9 Gbps recv vs 131 Gbps loopback)
+This is the headline network result. The absolute numbers are extraordinary — 67 Gbps across a virtual NIC is impressive in isolation — but the overhead relative to loopback is steep. The asymmetry between send (48%) and receive (54%) is meaningful: outbound VM traffic goes through the virtio-net ring buffer once and into the NAT engine, while inbound traffic must traverse the NAT connection-tracking table in addition, adding extra lookup overhead on every packet. Worth dedicating a sentence to this asymmetry in your results section.
+
+Parallel stream degradation — the most striking network finding
+This is genuinely surprising and thesis-worthy. Going from 1 stream (66.9 Gbps) to 8 streams (36.5 Gbps) loses 45% of throughput. In a physical network more parallel streams always help. Here the opposite happens because UTM's NAT engine is single-threaded — multiple streams compete for the same processing queue, and context-switching between them costs more than the parallelism gains. This directly confirms the architectural limitation you described in the I/O path earlier and ties neatly into your virtualization overhead narrative.
+
+UDP — NAT rate-caps at ~7 Gbps with zero loss
+The loopback UDP result (55 Gbps sender-reported, 83% kernel buffer loss) is not real loss — it's the kernel's socket receive buffer saturating because the loopback path is so fast the receiver can't drain it. The VM→Host UDP result is the opposite story: the UTM NAT engine caps throughput at a hard ~7 Gbps ceiling but delivers every packet cleanly with 0% loss and sub-millisecond jitter. This is actually correct NAT behaviour — it trades peak throughput for reliability. Important to explain this contrast clearly in your thesis so reviewers don't misread the loopback loss numbers.
+
+RTT latency — 8.4× overhead on average, 10.2× on minimum
+The minimum RTT is the purest measurement — 0.018 ms loopback vs 0.183 ms to host. That 0.165 ms difference is the irreducible cost of one virtio-net ring buffer transaction plus one NAT engine packet-processing cycle. The average overhead (0.064 ms → 0.537 ms, 8.4×) is larger because it includes scheduling jitter from the host OS occasionally preempting the NAT engine thread. The std dev blowing up from 0.020 ms to 0.130 ms tells the same story — the virtual NIC path introduces non-deterministic latency that bare metal networking does not.
+
+Small-message throughput — 23% overhead, ~60K msgs/sec penalty
+At 1-byte payloads the test isolates pure per-packet overhead. The VM can push ~60K fewer messages per second than loopback purely due to virtio ring buffer enqueue/dequeue cost per message. For latency-sensitive applications (message queues, RPC frameworks) this is the relevant number, not raw Gbps.

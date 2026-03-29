@@ -1,0 +1,27 @@
+===== SYSTEM INFO =====
+Hostname: Prateek-Kumar.local
+Date: Sun Mar 22 10:58:20 IST 2026
+
+--- OS ---
+ProductName:		macOS
+ProductVersion:		15.3.1
+BuildVersion:		24D70
+
+--- CPU Architecture ---
+arm64
+Apple M4
+
+--- Core Count ---
+Physical cores: 10
+Logical cores:  10
+
+--- CPU Frequency ---
+
+--- Cache Sizes ---
+L1D: 65536
+L1I: 131072
+L2:  4194304
+L3:  
+
+--- Memory ---
+Total RAM: 16.0 GB

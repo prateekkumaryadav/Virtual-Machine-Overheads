@@ -1,0 +1,27 @@
+===== SYSTEM INFO =====
+Hostname: PrateekVMs-Virtual-Machine.local
+Date: Sun Mar 22 11:55:53 IST 2026
+
+--- OS ---
+ProductName:		macOS
+ProductVersion:		15.3.1
+BuildVersion:		24D70
+
+--- CPU Architecture ---
+arm64
+Apple M4 (Virtual)
+
+--- Core Count ---
+Physical cores: 5
+Logical cores:  5
+
+--- CPU Frequency ---
+
+--- Cache Sizes ---
+L1D: 131072
+L1I: 196608
+L2:  16777216
+L3:  
+
+--- Memory ---
+Total RAM: 6.0 GB

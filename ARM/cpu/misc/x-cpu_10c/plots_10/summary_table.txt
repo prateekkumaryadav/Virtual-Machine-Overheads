@@ -1,0 +1,8 @@
+============================================================
+SUMMARY TABLE
+============================================================
+             Metric    BM mean    VM mean Overhead % p-value Significant?
+  Single-thread EPS 16860332.8 14441474.6    +14.35%  0.0000          Yes
+   Multi-thread EPS 99919229.7 61221082.3    +38.73%  0.0000          Yes
+Clock stability EPS 16389071.6 14385350.6    +12.23%  0.0000          Yes
+

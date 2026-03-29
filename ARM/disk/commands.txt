@@ -1,0 +1,15 @@
+# On bare metal host:
+chmod +x diskio_benchmark.sh
+bash diskio_benchmark.sh baremetal
+
+# On VM — copy script over first via shared folder or:
+scp diskio_benchmark.sh prateekvm@<vm-ip>:~/
+# Then on VM:
+bash diskio_benchmark.sh vm
+
+# Transfer VM results back to host:
+scp -r prateekvm@<vm-ip>:~/results_diskio_vm/ ~/virtualization_study/
+
+'''
+bash collect_diskinfo.sh | tee sysinfo_baremetal.txt
+'''

@@ -1,0 +1,16 @@
+Key findings
+
+Sequential throughput — near-negligible overhead (+1.34% write, +12.27% read)
+This is the best result for the VM. At 1M block sizes, the virtio-blk round-trip cost is amortized across a massive transfer, so the overhead essentially disappears for writes. Sequential read overhead of 12% is modest and attributable to the double-APFS read path (guest APFS reads → virtio → host APFS reads from NVMe). This tells you: for throughput-bound workloads, the VM is a reasonable substitute for bare metal.
+
+Random 4K read IOPS — 38% overhead (40,994 → 25,406 IOPS)
+This is the largest and most important finding. Every 4K random read requires a separate virtio ring buffer transaction — the guest queues the request, the host picks it up, resolves it through host APFS, and returns it. At high IOPS rates this per-request overhead compounds aggressively. This is the fundamental cost of para-virtualized I/O at small block sizes.
+
+Block size scaling — the most thesis-rich result
+The read overhead curve tells the whole story: 4K=+61%, 64K=+45%, 512K=+30%, 1M=+18%. The overhead decreases monotonically as block size grows because the fixed per-request virtio overhead becomes a smaller fraction of total transfer time. Write overhead collapses much faster (4K=+15%, 64K=+3.5%, 512K≈equal, 1M≈equal) because NVMe write coalescing and write buffering hide the virtio latency effectively. This asymmetry between read and write overhead is worth a dedicated paragraph.
+
+fsync — surprisingly small overhead (+6.97% IOPS, mean latency actually 3.8% faster on VM)
+This is the counterintuitive result. You'd expect fsync to be heavily penalised since it must flush through both APFS layers. The likely explanation: UTM's virtio-blk implementation batches or shortcuts the guest fsync, not necessarily flushing all the way to the physical NVMe on every call. The bare metal fsync hits the real NVMe flush command directly every time. Worth flagging in your methodology as a measurement caveat — the VM's fsync guarantee may be weaker than bare metal's despite appearing equivalent in throughput.
+
+Mixed 70R/30W — consistent ~21% overhead on both read and write
+The symmetry here (21.01% read, 20.99% write) is noteworthy — it confirms the overhead is driven by the shared virtio queue bottleneck rather than any read-specific or write-specific path. Under mixed load, both operations compete for the same virtio ring buffer slots.

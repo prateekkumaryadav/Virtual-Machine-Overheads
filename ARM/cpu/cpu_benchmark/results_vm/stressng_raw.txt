@@ -1,0 +1,18 @@
+stress-ng: info:  [6373] setting to a 30 secs run per stressor
+stress-ng: info:  [6373] dispatching hogs: 5 cpu
+stress-ng: info:  [6373] note: system has only 82 MB of free memory and swap, recommend using --oom-avoid
+stress-ng: metrc: [6373] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
+stress-ng: metrc: [6373]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
+stress-ng: metrc: [6373] cpu              322152     30.00    145.76      0.49     10738.10        2202.74        97.50       2670592
+stress-ng: info:  [6373] skipped: 0
+stress-ng: info:  [6373] passed: 5: cpu (5)
+stress-ng: info:  [6373] failed: 0
+stress-ng: info:  [6373] metrics untrustworthy: 0
+stress-ng: info:  [6373] successful run completed in 30.00 secs
+  (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
+stress-ng: metrc: [6373] cpu              322152     30.00    145.76      0.49     10738.10        2202.74        97.50       2670592
+stress-ng: info:  [6373] skipped: 0
+stress-ng: info:  [6373] passed: 5: cpu (5)
+stress-ng: info:  [6373] failed: 0
+stress-ng: info:  [6373] metrics untrustworthy: 0
+stress-ng: info:  [6373] successful run completed in 30.00 secs
