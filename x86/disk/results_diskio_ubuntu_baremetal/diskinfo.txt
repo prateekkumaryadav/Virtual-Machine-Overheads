@@ -1,0 +1,57 @@
+===== DISK INFO — baremetal =====
+Date: Sunday 29 March 2026 01:24:02 PM IST
+
+--- Block devices ---
+NAME          SIZE TYPE FSTYPE   MOUNTPOINT                          MODEL
+loop0           4K loop squashfs /snap/bare/5                        
+loop1        44.4M loop squashfs /snap/binwalk/2                     
+loop2       196.9M loop squashfs /snap/brave/610                     
+loop3       197.2M loop squashfs /snap/brave/612                     
+loop4        79.8M loop squashfs /snap/cheese/78                     
+loop5       345.7M loop squashfs /snap/code/228                      
+loop6        55.5M loop squashfs /snap/core18/2999                   
+loop7        63.8M loop squashfs /snap/core20/2717                   
+loop8        63.8M loop squashfs /snap/core20/2769                   
+loop9        73.9M loop squashfs /snap/core22/2045                   
+loop10         74M loop squashfs /snap/core22/2411                   
+loop11       66.9M loop squashfs /snap/core24/1349                   
+loop12       66.8M loop squashfs /snap/core24/1499                   
+loop13      254.6M loop squashfs /snap/firefox/7901                  
+loop14      254.9M loop squashfs /snap/firefox/7967                  
+loop15       18.5M loop squashfs /snap/firmware-updater/212          
+loop16       16.4M loop squashfs /snap/firmware-updater/216          
+loop17      531.4M loop squashfs /snap/gnome-42-2204/247             
+loop18        516M loop squashfs /snap/gnome-42-2204/202             
+loop19      606.1M loop squashfs /snap/gnome-46-2404/153             
+loop20       91.7M loop squashfs /snap/gtk-common-themes/1535        
+loop21       17.1M loop squashfs /snap/localsend/32                  
+loop22        395M loop squashfs /snap/mesa-2404/1165                
+loop23        8.8M loop squashfs /snap/ngrok/350                     
+loop24          9M loop squashfs /snap/ngrok/365                     
+loop25       10.8M loop squashfs /snap/snap-store/1270               
+loop26       15.5M loop squashfs /snap/snap-store/1310               
+loop27       48.1M loop squashfs /snap/snapd/25935                   
+loop28       48.4M loop squashfs /snap/snapd/26382                   
+loop29        576K loop squashfs /snap/snapd-desktop-integration/315 
+loop30      321.1M loop squashfs /snap/vlc/3777                      
+nvme0n1     476.9G disk                                              INTEL SSDPEKNW512G8H
+├─nvme0n1p1   260M part vfat     /boot/efi                           
+├─nvme0n1p2    16M part                                              
+├─nvme0n1p3 328.6G part ntfs                                         
+├─nvme0n1p4   1.1G part ntfs                                         
+├─nvme0n1p5  48.8G part ntfs                                         
+├─nvme0n1p6   487M part ntfs                                         
+└─nvme0n1p7  97.7G part ext4     /                                   
+
+--- Disk model and firmware (bare metal only) ---
+
+--- Filesystem mount info ---
+/dev/nvme0n1p7 on / type ext4 (rw,relatime)
+/dev/nvme0n1p1 on /boot/efi type vfat (rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)
+
+--- Scheduler and queue depth ---
+  nvme0n1: scheduler=[none] mq-deadline   queue_depth=255  rotational=0
+
+--- Available space on test volume ---
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/nvme0n1p7   96G   45G   46G  50% /
