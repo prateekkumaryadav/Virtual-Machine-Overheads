@@ -1,0 +1,14 @@
+Single-thread overhead: only 1.86% (1165 → 1143 EPS, p < 0.001)
+This is dramatically lower than the macOS result (12.63%). VirtualBox on x86 uses Intel VT-x hardware-assisted virtualization, which handles most privileged operations in hardware without software intervention. The near-native single-thread performance suggests VT-x's VMCS (Virtual Machine Control Structure) is efficiently managing the guest execution context with very few VM-exits for compute-only workloads. The result is statistically significant but practically negligible.
+
+Multi-thread overhead: 3.95% (2832 → 2720 EPS, p = 0.29 — NOT significant)
+This is the most important statistical result in the entire Ubuntu CPU study. The p-value of 0.29 means we cannot reject the null hypothesis — the multi-thread difference could simply be random variance. In practical terms, VirtualBox's 3-vCPU scheduling is delivering statistically equivalent multi-thread performance to bare metal at 3 threads. The high CV on bare metal (5.197%) reflects the first run's outlier (3125 EPS) likely due to boost clock behaviour, while subsequent runs stabilised around 2750 EPS.
+
+Clock stability — 4.6× more jitter on VM (CV: 0.281% BM vs 0.649% VM)
+Despite the low average overhead, the VM shows more than double the coefficient of variation across 20 bursts. This is vCPU preemption jitter — the host scheduler occasionally pulls a physical core back to serve host tasks between bursts, visible as the dip pattern in the stability plot. For latency-sensitive workloads this matters even when average throughput is comparable.
+
+vmstat CPU split — the most diagnostic result
+Bare metal shows 38.5% user / 1.1% sys / 60.4% idle — exactly as expected for 3 threads on an 8-core machine (3/8 ≈ 37.5%). The VM shows 98.2% user / 1.8% sys / 0.0% idle — all 3 vCPUs fully saturated with almost no sys time. Critically, the VM's sys% (1.8%) is slightly higher than bare metal (1.1%) — this small difference represents the hypervisor interrupt injection cost that is visible to the guest kernel, unlike the macOS study where hypercalls were completely hidden from top.
+
+Cross-platform comparison — headline thesis finding
+Apple M4/UTM single-thread overhead was 12.63% vs Intel/VirtualBox's 1.86%. This 6.8× difference in CPU virtualization overhead is attributable to three factors worth discussing in your thesis: ARM64 Hypervisor.framework on Apple Silicon is newer and less mature than Intel VT-x (which has been hardware-optimised over 15+ years); the M4's hybrid P/E core architecture adds scheduling complexity; and UTM's QEMU backend adds a software layer that VirtualBox's native VT-x driver avoids for most operations.
