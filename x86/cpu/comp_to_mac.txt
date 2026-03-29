@@ -1,0 +1,15 @@
+Key differences from the macOS version:
+
+sysctl -n hw.logicalcpu → nproc / /proc/cpuinfo
+top -l 20 -s 1 -n 0 → vmstat 1 20 + mpstat 1 20
+system_profiler → lscpu + dmidecode
+Linux has perf stat — a major addition not available on macOS, giving hardware-level counters (IPC, cache misses, branch mispredictions) directly quantifying virtualization overhead at the microarchitectural level
+
+perf stat — IPC and cache miss rates: 
+Instructions Per Cycle (IPC) is the cleanest single-number proxy for CPU efficiency. A VM running the same code as bare metal will show lower IPC because every VM-exit (timer interrupt, hypercall, memory access check) flushes the CPU pipeline, wasting cycles. On VirtualBox x86, VM-exits are far more frequent than on Apple's Hypervisor.framework ARM64 implementation, so you should see a more pronounced IPC gap here than you would on macOS.
+
+mpstat -P ALL — per-core utilisation: 
+On bare metal this shows load evenly spread across all cores. On the VM you'll often see uneven distribution — some vCPUs pinned to heavily loaded host cores will show lower utilisation and throughput, which the VM's scheduler can't compensate for. This directly visualises the vCPU-to-pCPU mapping quality.
+
+vmstat cs column — context switches:
+Unlike macOS where hypercalls are invisible to top, Linux vmstat captures some of the hypervisor interrupt injection cost in the cs (context switches per second) and in (interrupts per second) columns. A higher cs count on the VM compared to bare metal quantifies the hypervisor's interrupt overhead in a way the macOS study couldn't.

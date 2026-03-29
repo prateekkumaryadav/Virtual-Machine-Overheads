@@ -1,0 +1,9 @@
+Key differences from the macOS version:
+
+vm_stat → vmstat, iostat (native on Linux)
+posixaio → libaio for fio
+ping flags differ (-i 0.01 needs root on Linux, using -i 0.2 instead)
+VirtualBox NAT gateway is typically 10.0.2.2 (not 192.168.64.1)
+iperf3 server runs on bare metal host; VM connects out through VirtualBox NAT
+
+The VirtualBox NAT engine is structurally similar to UTM's but runs inside the VirtualBox kernel module (vboxnetflt) rather than fully in userspace, so you may see slightly lower latency overhead than the 8.4× RTT penalty we measured on macOS. The vmstat bonus benchmark will give you context switches per second under load — a metric we couldn't capture cleanly on macOS — which directly quantifies the hypervisor interrupt injection cost and makes for a strong cross-platform comparison point

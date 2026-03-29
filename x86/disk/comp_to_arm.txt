@@ -1,3 +1,10 @@
+Key differences from the macOS version:
+
+posixaio → libaio (native Linux async I/O engine)
+sudo purge → echo 3 | sudo tee /proc/sys/vm/drop_caches (Linux cache flush)
+No macOS-specific diskutil — using lsblk, fdisk, df, iostat
+fio job files work identically but engine changes throughout
+
 libaio vs posixaio: 
 Linux's native async I/O engine (libaio) submits I/O requests directly to the kernel's io_submit() syscall, bypassing the threading overhead of POSIX AIO. This gives you lower baseline latency on bare metal and a cleaner measurement of virtio-blk overhead on the VM.
 
@@ -5,4 +12,4 @@ VirtualBox disk format matters:
 Unlike UTM which used a raw .img file, VirtualBox by default uses .vdi (its own format) or .vmdk. Both add a thin indirection layer for every write — check which format your VM uses with VBoxManage showvminfo <vmname> | grep "Storage" on the host before running. If it's VDI with dynamic allocation, your write results will show higher overhead than the macOS raw image result.
 
 iostat -x gives device utilisation:
- The bonus benchmark captures %util (device busy percentage), await (average I/O wait in ms), and r/s+w/s (ops per second) at the device level — metrics unavailable on macOS. These let you determine whether the bottleneck is the storage device itself or the virtio-blk translation layer, which is a useful addition to your thesis methodology section.
+The bonus benchmark captures %util (device busy percentage), await (average I/O wait in ms), and r/s+w/s (ops per second) at the device level — metrics unavailable on macOS. These let you determine whether the bottleneck is the storage device itself or the virtio-blk translation layer, which is a useful addition to your thesis methodology section.
