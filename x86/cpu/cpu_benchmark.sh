@@ -6,6 +6,7 @@ LABEL=${1:-"unknown"}
 OUTDIR="./results_cpu_ubuntu_${LABEL}"
 DURATION=30
 RUNS=5
+
 # Use 1 thread for single, match core count for multi
 THREADS_SINGLE=1
 # THREADS_MULTI=$(nproc)
