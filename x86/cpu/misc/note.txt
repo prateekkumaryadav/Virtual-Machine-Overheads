@@ -1,0 +1,9 @@
+# On both machines:
+bash install_deps_cpu.sh
+
+# For perf stat to work without sudo:
+sudo sysctl kernel.perf_event_paranoid=1
+
+# Main benchmarks:
+bash cpu_benchmark_ubuntu.sh baremetal
+bash cpu_benchmark_ubuntu.sh vm
