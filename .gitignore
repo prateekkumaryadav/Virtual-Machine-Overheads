@@ -29,4 +29,4 @@ env/
 # Optional benchmark/runtime artifacts
 *.out
 *.pid
-*dump_results.sh
+*dumper.sh
