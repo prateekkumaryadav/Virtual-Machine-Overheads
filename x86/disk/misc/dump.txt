@@ -1,0 +1,267 @@
+prateek@Prateek-Kumar disk % bash dumper.sh baremetal
+========== baremetal ==========
+
+--- bsscale_read_1m ---
+  READ   bw=1450462 KB/s  iops=1416.5  lat_mean=22.587ms  lat_p95=34.341ms  lat_p99=37.487ms
+
+--- bsscale_read_4k ---
+  READ   bw=227601 KB/s  iops=56900.4  lat_mean=0.562ms  lat_p95=0.856ms  lat_p99=1.020ms
+
+--- bsscale_read_512k ---
+  READ   bw=1621669 KB/s  iops=3167.4  lat_mean=10.121ms  lat_p95=17.170ms  lat_p99=17.433ms
+
+--- bsscale_read_64k ---
+  READ   bw=1751073 KB/s  iops=27360.5  lat_mean=1.170ms  lat_p95=1.204ms  lat_p99=1.761ms
+
+--- bsscale_write_1m ---
+  WRITE  bw=361454 KB/s  iops=353.0  lat_mean=95.220ms  lat_p95=61.604ms  lat_p99=2533.360ms
+
+--- bsscale_write_4k ---
+  WRITE  bw=602517 KB/s  iops=150629.2  lat_mean=0.212ms  lat_p95=0.264ms  lat_p99=0.334ms
+
+--- bsscale_write_512k ---
+  WRITE  bw=938991 KB/s  iops=1834.0  lat_mean=17.449ms  lat_p95=25.559ms  lat_p99=29.491ms
+
+--- bsscale_write_64k ---
+  WRITE  bw=944538 KB/s  iops=14758.4  lat_mean=2.168ms  lat_p95=2.343ms  lat_p99=10.551ms
+
+--- fsync_lat ---
+  WRITE  bw=3096 KB/s  iops=773.9  lat_mean=0.010ms  lat_p95=0.023ms  lat_p99=0.043ms
+
+--- mixed_rw ---
+  READ   bw=78339 KB/s  iops=19584.7  lat_mean=1.594ms  lat_p95=1.221ms  lat_p99=40.108ms
+  WRITE  bw=33590 KB/s  iops=8397.3  lat_mean=0.059ms  lat_p95=0.114ms  lat_p99=0.194ms
+
+--- rand_read ---
+  READ   bw=325941 KB/s  iops=81485.3  lat_mean=0.392ms  lat_p95=0.831ms  lat_p99=0.954ms
+
+--- rand_write ---
+  WRITE  bw=406645 KB/s  iops=101661.2  lat_mean=0.317ms  lat_p95=0.276ms  lat_p99=0.444ms
+
+--- seq_read ---
+  READ   bw=1645387 KB/s  iops=1606.8  lat_mean=19.920ms  lat_p95=21.103ms  lat_p99=22.413ms
+
+--- seq_write ---
+  WRITE  bw=645816 KB/s  iops=630.7  lat_mean=56.683ms  lat_p95=57.934ms  lat_p99=69.730ms
+========== vm ==========
+
+--- bsscale_read_1m ---
+  READ   bw=1328151 KB/s  iops=1296.8  lat_mean=24.895ms  lat_p95=26.083ms  lat_p99=56.361ms
+
+--- bsscale_read_4k ---
+  READ   bw=119016 KB/s  iops=29753.6  lat_mean=1.074ms  lat_p95=1.909ms  lat_p99=2.310ms
+
+--- bsscale_read_512k ---
+  READ   bw=1254663 KB/s  iops=2450.4  lat_mean=13.092ms  lat_p95=15.925ms  lat_p99=17.433ms
+
+--- bsscale_read_64k ---
+  READ   bw=1318752 KB/s  iops=20605.3  lat_mean=1.554ms  lat_p95=2.007ms  lat_p99=2.376ms
+
+--- bsscale_write_1m ---
+  WRITE  bw=789108 KB/s  iops=770.3  lat_mean=41.536ms  lat_p95=53.740ms  lat_p99=60.031ms
+
+--- bsscale_write_4k ---
+  WRITE  bw=102064 KB/s  iops=25515.9  lat_mean=1.254ms  lat_p95=1.597ms  lat_p99=1.991ms
+
+--- bsscale_write_512k ---
+  WRITE  bw=794219 KB/s  iops=1550.9  lat_mean=20.611ms  lat_p95=26.608ms  lat_p99=31.850ms
+
+--- bsscale_write_64k ---
+  WRITE  bw=788388 KB/s  iops=12318.2  lat_mean=2.612ms  lat_p95=6.586ms  lat_p99=14.221ms
+
+--- fsync_lat ---
+  WRITE  bw=861 KB/s  iops=214.9  lat_mean=0.015ms  lat_p95=0.031ms  lat_p99=0.056ms
+
+--- mixed_rw ---
+  READ   bw=71018 KB/s  iops=17754.2  lat_mean=1.420ms  lat_p95=1.335ms  lat_p99=4.489ms
+  WRITE  bw=30432 KB/s  iops=7607.7  lat_mean=0.950ms  lat_p95=1.221ms  lat_p99=1.663ms
+
+--- rand_read ---
+  READ   bw=139220 KB/s  iops=34804.8  lat_mean=0.920ms  lat_p95=1.106ms  lat_p99=1.253ms
+
+--- rand_write ---
+  WRITE  bw=44813 KB/s  iops=11203.0  lat_mean=2.858ms  lat_p95=1.483ms  lat_p99=1.991ms
+
+--- seq_read ---
+  READ   bw=1337179 KB/s  iops=1305.7  lat_mean=24.552ms  lat_p95=29.491ms  lat_p99=31.588ms
+
+--- seq_write ---
+  WRITE  bw=436085 KB/s  iops=425.4  lat_mean=95.761ms  lat_p95=53.215ms  lat_p99=2835.350ms
+
+========== IOSTAT SAMPLE (baremetal) ==========
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+nvme0n1       2764.54  75367.13    10.48   0.38    3.17    27.26 3330.38  40068.03    19.68   0.59    2.25    12.03    0.00      0.00     0.00   0.00    0.00     0.00   12.96    0.77   16.26  14.46
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+nvme0n1       60813.00 243252.00     0.00   0.00    0.38     4.00    0.00      0.00    13.00 100.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00   23.41  54.60
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+nvme0n1       83669.00 334680.00     0.00   0.00    0.37     4.00    2.00     60.00     0.00   0.00    1.00    30.00    0.00      0.00     0.00   0.00    0.00     0.00    1.00    1.00   31.22  73.20
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+nvme0n1       83310.00 333236.00     0.00   0.00    0.38     4.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00   31.42  72.90
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+nvme0n1       83896.00 335584.00     0.00   0.00    0.37     4.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00   31.42  72.90
+
+--
+
+========== IOSTAT SAMPLE (vm) ==========
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           1885.99  83436.82    10.38   0.55    1.24    44.24  925.83  38867.55    13.92   1.48    2.42    41.98    0.00      0.00     0.00   0.00    0.00     0.00   10.36    3.17    4.61  20.50
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           23890.10  95798.02    58.42   0.24    0.21     4.01    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    4.94  64.75
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           32641.00 130560.00     0.00   0.00    0.19     4.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    6.15  90.20
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           32208.00 128832.00     0.00   0.00    0.20     4.00    2.00     44.00     9.00  81.82    2.50    22.00    0.00      0.00     0.00   0.00    0.00     0.00    2.00    2.00    6.50  91.20
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           30476.00 121904.00     0.00   0.00    0.19     4.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    5.73  88.60
+
+--
+prateek@Prateek-Kumar disk % bash dumper.sh vm       
+========== baremetal ==========
+
+--- bsscale_read_1m ---
+  READ   bw=1450462 KB/s  iops=1416.5  lat_mean=22.587ms  lat_p95=34.341ms  lat_p99=37.487ms
+
+--- bsscale_read_4k ---
+  READ   bw=227601 KB/s  iops=56900.4  lat_mean=0.562ms  lat_p95=0.856ms  lat_p99=1.020ms
+
+--- bsscale_read_512k ---
+  READ   bw=1621669 KB/s  iops=3167.4  lat_mean=10.121ms  lat_p95=17.170ms  lat_p99=17.433ms
+
+--- bsscale_read_64k ---
+  READ   bw=1751073 KB/s  iops=27360.5  lat_mean=1.170ms  lat_p95=1.204ms  lat_p99=1.761ms
+
+--- bsscale_write_1m ---
+  WRITE  bw=361454 KB/s  iops=353.0  lat_mean=95.220ms  lat_p95=61.604ms  lat_p99=2533.360ms
+
+--- bsscale_write_4k ---
+  WRITE  bw=602517 KB/s  iops=150629.2  lat_mean=0.212ms  lat_p95=0.264ms  lat_p99=0.334ms
+
+--- bsscale_write_512k ---
+  WRITE  bw=938991 KB/s  iops=1834.0  lat_mean=17.449ms  lat_p95=25.559ms  lat_p99=29.491ms
+
+--- bsscale_write_64k ---
+  WRITE  bw=944538 KB/s  iops=14758.4  lat_mean=2.168ms  lat_p95=2.343ms  lat_p99=10.551ms
+
+--- fsync_lat ---
+  WRITE  bw=3096 KB/s  iops=773.9  lat_mean=0.010ms  lat_p95=0.023ms  lat_p99=0.043ms
+
+--- mixed_rw ---
+  READ   bw=78339 KB/s  iops=19584.7  lat_mean=1.594ms  lat_p95=1.221ms  lat_p99=40.108ms
+  WRITE  bw=33590 KB/s  iops=8397.3  lat_mean=0.059ms  lat_p95=0.114ms  lat_p99=0.194ms
+
+--- rand_read ---
+  READ   bw=325941 KB/s  iops=81485.3  lat_mean=0.392ms  lat_p95=0.831ms  lat_p99=0.954ms
+
+--- rand_write ---
+  WRITE  bw=406645 KB/s  iops=101661.2  lat_mean=0.317ms  lat_p95=0.276ms  lat_p99=0.444ms
+
+--- seq_read ---
+  READ   bw=1645387 KB/s  iops=1606.8  lat_mean=19.920ms  lat_p95=21.103ms  lat_p99=22.413ms
+
+--- seq_write ---
+  WRITE  bw=645816 KB/s  iops=630.7  lat_mean=56.683ms  lat_p95=57.934ms  lat_p99=69.730ms
+========== vm ==========
+
+--- bsscale_read_1m ---
+  READ   bw=1328151 KB/s  iops=1296.8  lat_mean=24.895ms  lat_p95=26.083ms  lat_p99=56.361ms
+
+--- bsscale_read_4k ---
+  READ   bw=119016 KB/s  iops=29753.6  lat_mean=1.074ms  lat_p95=1.909ms  lat_p99=2.310ms
+
+--- bsscale_read_512k ---
+  READ   bw=1254663 KB/s  iops=2450.4  lat_mean=13.092ms  lat_p95=15.925ms  lat_p99=17.433ms
+
+--- bsscale_read_64k ---
+  READ   bw=1318752 KB/s  iops=20605.3  lat_mean=1.554ms  lat_p95=2.007ms  lat_p99=2.376ms
+
+--- bsscale_write_1m ---
+  WRITE  bw=789108 KB/s  iops=770.3  lat_mean=41.536ms  lat_p95=53.740ms  lat_p99=60.031ms
+
+--- bsscale_write_4k ---
+  WRITE  bw=102064 KB/s  iops=25515.9  lat_mean=1.254ms  lat_p95=1.597ms  lat_p99=1.991ms
+
+--- bsscale_write_512k ---
+  WRITE  bw=794219 KB/s  iops=1550.9  lat_mean=20.611ms  lat_p95=26.608ms  lat_p99=31.850ms
+
+--- bsscale_write_64k ---
+  WRITE  bw=788388 KB/s  iops=12318.2  lat_mean=2.612ms  lat_p95=6.586ms  lat_p99=14.221ms
+
+--- fsync_lat ---
+  WRITE  bw=861 KB/s  iops=214.9  lat_mean=0.015ms  lat_p95=0.031ms  lat_p99=0.056ms
+
+--- mixed_rw ---
+  READ   bw=71018 KB/s  iops=17754.2  lat_mean=1.420ms  lat_p95=1.335ms  lat_p99=4.489ms
+  WRITE  bw=30432 KB/s  iops=7607.7  lat_mean=0.950ms  lat_p95=1.221ms  lat_p99=1.663ms
+
+--- rand_read ---
+  READ   bw=139220 KB/s  iops=34804.8  lat_mean=0.920ms  lat_p95=1.106ms  lat_p99=1.253ms
+
+--- rand_write ---
+  WRITE  bw=44813 KB/s  iops=11203.0  lat_mean=2.858ms  lat_p95=1.483ms  lat_p99=1.991ms
+
+--- seq_read ---
+  READ   bw=1337179 KB/s  iops=1305.7  lat_mean=24.552ms  lat_p95=29.491ms  lat_p99=31.588ms
+
+--- seq_write ---
+  WRITE  bw=436085 KB/s  iops=425.4  lat_mean=95.761ms  lat_p95=53.215ms  lat_p99=2835.350ms
+
+========== IOSTAT SAMPLE (baremetal) ==========
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+nvme0n1       2764.54  75367.13    10.48   0.38    3.17    27.26 3330.38  40068.03    19.68   0.59    2.25    12.03    0.00      0.00     0.00   0.00    0.00     0.00   12.96    0.77   16.26  14.46
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+nvme0n1       60813.00 243252.00     0.00   0.00    0.38     4.00    0.00      0.00    13.00 100.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00   23.41  54.60
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+nvme0n1       83669.00 334680.00     0.00   0.00    0.37     4.00    2.00     60.00     0.00   0.00    1.00    30.00    0.00      0.00     0.00   0.00    0.00     0.00    1.00    1.00   31.22  73.20
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+nvme0n1       83310.00 333236.00     0.00   0.00    0.38     4.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00   31.42  72.90
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+nvme0n1       83896.00 335584.00     0.00   0.00    0.37     4.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00   31.42  72.90
+
+--
+
+========== IOSTAT SAMPLE (vm) ==========
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           1885.99  83436.82    10.38   0.55    1.24    44.24  925.83  38867.55    13.92   1.48    2.42    41.98    0.00      0.00     0.00   0.00    0.00     0.00   10.36    3.17    4.61  20.50
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           23890.10  95798.02    58.42   0.24    0.21     4.01    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    4.94  64.75
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           32641.00 130560.00     0.00   0.00    0.19     4.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    6.15  90.20
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           32208.00 128832.00     0.00   0.00    0.20     4.00    2.00     44.00     9.00  81.82    2.50    22.00    0.00      0.00     0.00   0.00    0.00     0.00    2.00    2.00    6.50  91.20
+
+--
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           30476.00 121904.00     0.00   0.00    0.19     4.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00      0.00     0.00   0.00    0.00     0.00    0.00    0.00    5.73  88.60
+
+--
+prateek@Prateek-Kumar disk % 

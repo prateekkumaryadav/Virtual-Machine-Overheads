@@ -1,0 +1,19 @@
+Key findings
+
+Sequential throughput — meaningful overhead (read +18.7%, write +32.5%)
+Unlike macOS where sequential write was near-native (−1.3%), Ubuntu/VirtualBox shows 32.5% write overhead. This is directly attributable to the VDI disk image format — VirtualBox's default .vdi is a dynamically-allocated format that must update its metadata block map on every write, adding a host-side I/O operation per guest write. The macOS study used a raw .img which has no such overhead. This is an important cross-platform methodology note for your thesis.
+
+Random IOPS — severe overhead (read +57.3%, write +89.0%)
+The write IOPS result (101,661 → 11,203) is the most extreme finding in the entire study. Each 4K random write on the VM triggers: virtio-blk ring buffer enqueue → VirtualBox VDI block allocation check → host ext4 write → NVMe write. That's at minimum two filesystem operations per guest write. The 8.9× IOPS reduction directly reflects this stacked I/O overhead. Read IOPS are similarly impacted (+57.3%) though less severely since reads don't trigger VDI metadata updates.
+
+fsync — 72.2% overhead (773 → 214 IOPS)
+This is the opposite of the macOS result where fsync overhead was only 6.97%. Linux+VirtualBox appears to honour full flush semantics — every guest fsync triggers a real fdatasync down to the physical NVMe, passing through both the guest ext4 journal and the host ext4 journal. Two full journal flushes per fsync operation is expensive but correct for crash consistency. This actually makes VirtualBox's fsync semantically stronger than UTM's (which likely shortcuts the flush), at the cost of throughput.
+Block size write scaling — the anomaly: VM faster at 1M (+118%)
+
+The 1M write result (BM: 0.34 GB/s, VM: 0.75 GB/s) needs careful interpretation. The bare metal 1M sequential write is anomalously slow — likely due to NVMe write buffer saturation at large block sizes causing irregular write amplification, visible in the p99 latency of 2533ms (a massive outlier). The VM's VDI write path happens to avoid this by buffering writes differently. For your thesis, flag the bare metal 1M write p99=2533ms as an indication of NVMe write cache flush stalls rather than a genuine VM advantage.
+
+Mixed 70R/30W — near-equal (~9% overhead)
+Consistent with the macOS finding, mixed workloads show lower overhead than pure random because the read and write queues pipeline efficiently through the virtio-blk ring, partially hiding per-request latency.
+
+iostat — VM achieves higher %util at lower IOPS
+The VM reaches 83.7% device utilisation while delivering only 38% of bare metal's IOPS. This means the virtio-blk queue is constantly saturated — the VM is not idle, it's working hard but most time is spent waiting for the VirtualBox VDI translation layer rather than getting actual I/O completed. The r_await being lower on the VM (0.20ms vs 0.38ms) is another anomaly: the virtio-blk driver's iodepth=32 queue is being served by the VDI layer faster per-request, but the VDI overhead appears elsewhere as reduced throughput.
