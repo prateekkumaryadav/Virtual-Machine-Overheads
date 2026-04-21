@@ -1,0 +1,19 @@
+Metric,Bare metal,VM (UTM),VM overhead,Direction
+Seq read BW,3.10,2.72,+12.27%,VM slower
+Seq write BW,2.50,2.46,+1.34%,~equal
+Rand read IOPS,40994.10,25406.10,+38.02%,VM slower
+Rand write IOPS,16637.20,13693.50,+17.69%,VM slower
+Rand read lat,0.39,0.63,+38.00%,VM slower
+Rand write lat,0.96,1.17,+17.81%,VM slower
+Mixed read IOPS,19542.00,15436.30,+21.01%,VM slower
+Mixed write IOPS,8378.60,6620.30,+20.99%,VM slower
+fsync IOPS,241.10,224.30,+6.97%,VM slower
+fsync lat mean,0.11,0.10,-3.81%,VM faster
+BS read 4K BW,0.53,0.21,+60.98%,VM slower
+BS read 64K BW,1.70,0.94,+44.95%,VM slower
+BS read 512K BW,3.17,2.22,+29.92%,VM slower
+BS read 1M BW,3.14,2.58,+18.07%,VM slower
+BS write 4K BW,0.20,0.17,+15.13%,VM slower
+BS write 64K BW,2.31,2.23,+3.53%,~equal
+BS write 512K BW,2.35,2.38,-1.30%,~equal
+BS write 1M BW,2.35,2.23,+4.88%,~equal

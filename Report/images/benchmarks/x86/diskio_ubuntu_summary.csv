@@ -1,0 +1,18 @@
+Metric,Bare metal,VM (VBox),VM overhead,Direction
+Seq read BW,1.57,1.28,+18.73%,VM slower
+Seq write BW,0.62,0.42,+32.48%,VM slower
+Rand read IOPS,81485.30,34804.80,+57.29%,VM slower
+Rand write IOPS,101661.20,11203.00,+88.98%,VM slower
+Rand read lat,0.39,0.92,+57.39%,VM slower
+Rand write lat,0.32,2.86,+88.91%,VM slower
+Mixed read IOPS,19584.70,17754.20,+9.35%,~equal
+Mixed write IOPS,8397.30,7607.70,+9.40%,~equal
+fsync IOPS,773.90,214.90,+72.23%,VM slower
+BS read 4K BW,0.22,0.11,+47.71%,VM slower
+BS read 64K BW,1.67,1.26,+24.69%,VM slower
+BS read 512K BW,1.55,1.20,+22.63%,VM slower
+BS read 1M BW,1.38,1.27,+8.43%,~equal
+BS write 4K BW,0.57,0.10,+83.06%,VM slower
+BS write 64K BW,0.90,0.75,+16.53%,VM slower
+BS write 512K BW,0.90,0.76,+15.42%,VM slower
+BS write 1M BW,0.34,0.75,-118.31%,VM faster

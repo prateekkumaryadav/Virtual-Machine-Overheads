@@ -1,0 +1,4 @@
+Metric,BM mean,VM mean,Overhead %,p-value,Significant?
+Single-thread EPS,16528850.3,14441474.6,+12.63%,0.0000,Yes
+Multi-thread EPS,71738720.2,61221082.3,+14.66%,0.0000,Yes
+Clock stability EPS,15924880.1,14385350.6,+9.67%,0.0000,Yes

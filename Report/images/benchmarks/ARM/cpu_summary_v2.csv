@@ -1,0 +1,4 @@
+Metric,BM mean,BM CV%,VM mean,VM CV%,Overhead,p-value,Significant
+Single-thread EPS,16.53M,2.114%,14.44M,0.383%,12.63%,0.00000,Yes ***
+Multi-thread EPS (5T),71.74M,0.479%,61.22M,3.603%,14.66%,0.00001,Yes ***
+Clock stability EPS,15.92M,0.822%,14.39M,0.756%,9.67%,0.00000,Yes ***
