@@ -31,3 +31,5 @@ env/
 *.pid
 *dumper.sh
 *gitkey.txt
+
+*.py
