@@ -205,8 +205,8 @@ Metrics collected:
 To ensure reliability and consistency, the following procedure was applied:
 
 \begin{itemize}
-    \item Each benchmark was executed multiple times
-    \item Results were averaged to reduce variability
+    \item Each benchmark was executed for 10 independent iterations to ensure a statistically robust sample size.
+    \item Results report the mean values, and performance variability was analyzed using standard deviation and 95\% confidence intervals.
     \item System caches were cleared between disk tests using:
     \begin{verbatim}
 echo 3 | sudo tee /proc/sys/vm/drop_caches
@@ -280,10 +280,10 @@ The following chapters present detailed results and analysis for ARM and x86 arc
 The experiments were conducted on two primary architectures to evaluate the overhead introduced by virtualization compared to bare metal execution.
 
 \subsection{ARM Architecture Setup}
-The ARM environment consists of an Apple Silicon macOS host with a heterogeneous multi-core CPU. The virtualized environment is provisioned using UTM (QEMU-based), running an ARM64 Ubuntu instance allocated with 5 vCPUs. Testing relies on hardware-assisted virtualization without instruction translation, though utilizing a userspace NAT engine for networking.
+The ARM environment consists of an Apple MacBook Pro (M4, 2024/25) running macOS. The M4 chip features a heterogeneous multi-core CPU with dedicated performance and efficiency cores. The virtualized environment is provisioned using UTM (QEMU-based), running an ARM64 Ubuntu instance allocated with 5 vCPUs. Testing relies on hardware-assisted virtualization without instruction translation, utilizing a userspace NAT engine for networking.
 
 \subsection{x86 Architecture Setup}
-The x86 environment utilizes a dedicated x86\_64 machine with an NVMe SSD running Ubuntu Linux natively. For the virtual environment, Oracle VirtualBox hosts an Ubuntu VM using Intel VT-x hardware-assisted virtualization, dynamic VDI storage, and NAT networking.
+The x86 environment utilizes an HP Pavilion 14-ce3006tu running Ubuntu Linux natively. This machine is equipped with an Intel Core i5-1035G1 processor and an NVMe SSD. For the virtual environment, Oracle VirtualBox hosts an Ubuntu VM using Intel VT-x hardware-assisted virtualization, dynamic VDI storage, and NAT networking.
 
 \section{Performance Evaluation}
 
@@ -305,7 +305,7 @@ CPU benchmarks highlight the compute overhead introduced by the hypervisor sched
 \end{figure}
 
 On ARM (UTM), we observe a relatively consistent CPU overhead of 14.35\% for single-threaded workloads and 14.66\% for multi-threaded workloads (5-thread on 5-vCPU). Because ARM64 bypasses instruction translation here, the slight drop stems mainly from QEMU context switches scheduling the virtual CPUs.
-Conversely, on x86 (VirtualBox), CPU virtualization exhibits near-native performance with a mere 1.86\% overhead for single-thread scenarios, showcasing a 6.8-fold efficiency advantage over the ARM/UTM implementation. Intel VT-x effectively delegates workloads to physical execution. Multi-threaded overhead slightly increases but remains mostly statistically insignificant (p=0.29) from bare metal, though experiencing marginally higher execution jitter.
+Conversely, on x86 (VirtualBox), CPU virtualization exhibits near-native performance with a mere 1.86\% overhead for single-thread scenarios, showcasing a 6.8-fold efficiency advantage over the ARM/UTM implementation. Intel VT-x effectively delegates workloads to physical execution. Multi-threaded overhead slightly increases but the difference from bare metal remains statistically insignificant (exhibiting overlapping 95\% confidence intervals), though experiencing marginally higher execution jitter.
 
 \subsection{Disk I/O Performance}
 Disk I/O evaluation targets sequential, random, and mixed workloads using \texttt{fio}.
@@ -335,19 +335,25 @@ Network efficiency was tested using \texttt{iperf3} focusing on TCP/UDP throughp
     \caption{Network Performance Overview on ARM.}
 \end{figure}
 
-Networking observed the most drastic virtualization taxation on both platforms. TCP throughput dropped by 48\%--54\% against local loopbacks globally, and round-trip time (RTT) average latency became 8.4 times higher (with minimum RTT showing a 10.2x increase) on ARM. A critical finding reveals that parallel TCP streaming actually degrades performance compared to single streams: increasing TCP streams from 1 to 8 caused total throughput to collapse by 45\%, outlining severe contention bottlenecks within single-threaded NAT engines. While throughput limits hit hard, packet reliability via UDP demonstrated that the hypervisor strictly shapes traffic without yielding packet loss. Both ARM and x86 face fundamentally similar virtual networking limitations.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{final_selected_benchmarks_plots/x86/net.png}
+    \caption{Network Performance Overview on x86.}
+\end{figure}
+
+Networking observed the most drastic virtualization taxation on both platforms. TCP throughput dropped by 48\%--54\% against local loopbacks globally, and round-trip time (RTT) average latency became 8.4 times higher (with minimum RTT showing a 10.2x increase) on ARM. A critical finding reveals that parallel TCP streaming actually degrades performance compared to single streams: increasing TCP streams from 1 to 8 caused total throughput to collapse by 45\%, outlining severe contention bottlenecks within single-threaded NAT engines. While throughput limits hit hard, packet reliability via UDP demonstrated that the hypervisor strictly shapes traffic without yielding packet loss. While both platforms suffer significant NAT overhead, ARM/UTM exhibits more severe RTT inflation (8.4--10.2x) compared to x86/VirtualBox (6.8--7.0x), attributable to UTM's userspace NAT implementation versus VirtualBox's kernel-assisted NAT.
 
 \section{Comparative Analysis \& Lessons Learned}
 
-While CPU operations are remarkably close to native speed (particularly due to mature extensions on x86), storage and network layers are penalized by abstraction constraints:
+Given the disparities in host hardware, hypervisor implementations (UTM vs VirtualBox), and disk formats (Raw vs VDI), differences cannot be cleanly attributed to the underlying ARM or x86 architectures alone. Instead, they reflect the characteristics of these distinct virtualization stacks:
 \begin{itemize}
-    \item \textbf{Mature VT-x vs QEMU VM}: x86 hardware assistance handles instructions more efficiently.
-    \item \textbf{Storage Stack}: Image formats like dynamically expanded `.vdi` dramatically inflate write latencies against raw disk translations. Virtualized systems targeting heavy DBMS should bypass these mechanisms via hardware passthrough.
-    \item \textbf{NAT limitations}: The NAT networking paradigm in desktop hypervisors is extremely detrimental to highly parallel TCP workflows.
+    \item \textbf{Hypervisor Implementation}: x86 hardware assistance (Intel VT-x via VirtualBox) handles CPU instructions more transparently than the QEMU-based UTM implementation on ARM, which exhibits higher context-switching overhead.
+    \item \textbf{Storage Stack}: Image formats like dynamically expanded \texttt{.vdi} dramatically inflate write latencies compared to raw disk translations. Virtualized systems targeting high I/O workloads should bypass these mechanisms via direct volume mapping or passthrough.
+    \item \textbf{Networking Bottlenecks}: The NAT networking paradigm in desktop hypervisors is extremely detrimental to highly parallel TCP workflows across both measured environments.
 \end{itemize}
 
 \section{Conclusion}
-This study quantifies virtualization penalties comparatively. The x86 virtualization ecosystem delivers marginally better compute integration, effectively wiping out compute overhead, but suffers heavy disk emulation latency unless specifically optimized. The ARM UTM stack operates at a higher base compute tax but handles lightweight virtual networking stably. The results inform administrators to favor bare metal (or passthrough) for clustered SQL and parallel throughput clusters, while effectively treating VMs as raw compute nodes for compute-bound isolated services.
+This study quantifies virtualization penalties across two contrasting virtualization ecosystems. The x86/VirtualBox ecosystem delivers marginally better compute integration for these specific tests but suffers heavy disk emulation latency unless specifically optimized. The ARM/UTM stack operates at a higher base compute tax due to hypervisor scheduling but exhibits different constraints under storage layers. Because of foundational variations in hypervisors and storage abstractions, these results underscore the impact of the entire virtualization stack rather than purely architectural limits. Based strictly on the \texttt{fio} and \texttt{iperf3} behaviors observed, administrators should favor bare metal or hardware passthrough configurations for workloads demanding high random I/O and intensive parallel network throughput, while treating these VMs as highly effective environments for isolated, compute-bound services.
 
 \begin{thebibliography}{00}
 
